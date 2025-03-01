@@ -28,8 +28,7 @@ const Login = () => {
         <section className="bg-white dark:bg-gray-900">
         <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
           <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            {/* <img className="w-auto h-7 sm:h-10 sm:w-8 rounded-md" src="src/assets/image.png" alt="" /> */}
-  
+
             <div className="flex items-center justify-center mt-6">
               <Link
                 to="/login"

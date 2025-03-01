@@ -13,7 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => { 
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      <ToastContainer position="top-right" autoClose={3000} />
 
       <Routes>
         <Route path="/login" element={<Login />} />

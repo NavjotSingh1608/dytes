@@ -29,7 +29,7 @@ const Register = () => {
       <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
           <div className="flex justify-center mx-auto">
-            {/* <img className="w-auto h-7 sm:h-8" src="src/assets/image.png" alt="" /> */}
+
           </div>
 
           <div className="flex items-center justify-center mt-6">

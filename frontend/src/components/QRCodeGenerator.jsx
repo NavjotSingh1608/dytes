@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API from "../utils/api";
 
 const QRCodeGenerator = () => {
     const [text, setText] = useState("");
@@ -9,7 +10,7 @@ const QRCodeGenerator = () => {
         if (!text) return;
 
         try {
-            const response = await axios.post("http://localhost:8000/api/qrcode/generate-qr", { text });
+            const response = await API.post(`/api/qrcode/generate-qr`, { text });
             setQrCode(response.data.qrCode);
         } catch (error) {
             console.error("Error generating QR code:", error);
