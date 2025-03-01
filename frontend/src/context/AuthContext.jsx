@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const res = await API.post("/api/auth/signup", userData, {withCredentials: true});
+            const res = await API.post("/api/auth/signup", userData, { withCredentials: true });
             const token = res.data.token;
             localStorage.setItem("token", token);
             toast.success("Registered successfully!");
@@ -69,7 +69,11 @@ const AuthProvider = ({ children }) => {
 
     const forgotPassword = async (email) => {
         try {
-            const res = await API.post("/api/auth/forgot-password", { email }, { withCredentials: true });
+            const res = await API.post("/api/auth/forgot-password", { email }, {
+                withCredentials: true, headers: {
+                    "Content-Type": "application/json",
+                },
+            });
             toast.success("Reset link sent to your email!");
             return res.data;
         } catch (error) {
