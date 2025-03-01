@@ -1,27 +1,25 @@
-import QRCode from "../models/QRCode.js";
+import QRCode from "qrcode";
 import redisClient from "../config/redis.js";
-import { QRCodeStyling } from "qr-code-styling";
 
-export const generateQRCode = async (req, res) => {
-  const { data, style } = req.body;
-  const userId = req.user.id;
+export const generateQR = async (req, res) => {
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ error: "Text is required" });
 
-  const cacheKey = `qr:${data}:${JSON.stringify(style)}`;
-  const cachedQR = await redisClient.get(cacheKey);
+  try {
+    const cachedQRCode = await redisClient.get(text);
+    if (cachedQRCode) {
+      console.log("Cache hit - returning cached QR code");
+      return res.json({ qrCode: cachedQRCode });
+    }
 
-  if (cachedQR) {
-    return res.json({ qrCode: cachedQR });
+    const qrCodeDataURL = await QRCode.toDataURL(text);
+
+    await redisClient.setEx(text, 86400, qrCodeDataURL);
+
+    console.log("Cache miss - QR code generated and stored in Redis");
+    res.json({ qrCode: qrCodeDataURL });
+  } catch (error) {
+    console.error("Error generating QR Code:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-
-  const qrCode = new QRCodeStyling({
-    width: 300,
-    height: 300,
-    data,
-    dotsOptions: style,
-  });
-
-  const newQR = await QRCode.create({ userId, data, style });
-  redisClient.setEx(cacheKey, 3600, newQR._id.toString());
-
-  res.json({ qrCode: newQR });
 };
