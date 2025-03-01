@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         try {
-            const res = await API.post("/api/auth/login", credentials);
+            const res = await API.post("/api/auth/login", credentials, { withCredentials: true });
             const token = res.data.token;
 
             if (!token) throw new Error("Invalid login response");
