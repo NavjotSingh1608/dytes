@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import API from "../utils/api";
 import { jwtDecode } from "jwt-decode";
 import React from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
@@ -31,12 +30,11 @@ const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const res = await API.post("/api/auth/signup", userData, {withCredentials: true,});
+            const res = await API.post("/api/auth/signup", userData, {withCredentials: true});
             const token = res.data.token;
             localStorage.setItem("token", token);
-            toast.success("Registered in successfully!");
-            const decoded = jwtDecode(token);
-            setUser(decoded);
+            toast.success("Registered successfully!");
+            setUser(jwtDecode(token));
 
             navigate("/");
         } catch (error) {
@@ -44,21 +42,17 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-
     const login = async (credentials) => {
         try {
             const res = await API.post("/api/auth/login", credentials);
             const token = res.data.token;
 
-            if (!token) {
-                throw new Error("Invalid login response");
-            }
+            if (!token) throw new Error("Invalid login response");
 
             localStorage.setItem("token", token);
             toast.success("Logged in successfully!");
 
-            const decoded = jwtDecode(token);
-            setUser(decoded);
+            setUser(jwtDecode(token));
             navigate("/");
         } catch (error) {
             console.error("Login failed:", error.response?.data?.message || error.message);
@@ -68,7 +62,7 @@ const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token");
-        toast.success("Logout Successfully")
+        toast.success("Logout Successful");
         setUser(null);
         navigate("/login");
     };

@@ -8,18 +8,21 @@ import React from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-const App = () => {
+const App = () => { 
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
+        
+        <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+        
       </Routes>
     </>
   );
