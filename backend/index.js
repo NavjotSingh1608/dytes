@@ -5,7 +5,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import qrRoutes from "./routes/qrRoutes.js";
 
-dotenv.config()
+dotenv.config({ path: './.env' }); 
+
 connectDB();
 
 const app = express();
