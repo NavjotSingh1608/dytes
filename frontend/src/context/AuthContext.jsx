@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const res = await API.post("/api/auth/signup", userData);
+            const res = await API.post("/api/auth/signup", userData, {withCredentials: true,});
             const token = res.data.token;
             localStorage.setItem("token", token);
             toast.success("Registered in successfully!");
