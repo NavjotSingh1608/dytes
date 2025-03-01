@@ -75,7 +75,7 @@ const AuthProvider = ({ children }) => {
 
     const forgotPassword = async (email) => {
         try {
-            const res = await axios.post("http://localhost:8000/api/auth/forgot-password", { email }, { withCredentials: true });
+            const res = await API.post("/api/auth/forgot-password", { email }, { withCredentials: true });
             toast.success("Reset link sent to your email!");
             return res.data;
         } catch (error) {
@@ -86,7 +86,7 @@ const AuthProvider = ({ children }) => {
 
     const resetPassword = async (id, token, newPassword) => {
         try {
-            const res = await axios.post(`http://localhost:8000/api/auth/reset-password/${id}/${token}`, { password: newPassword }, { withCredentials: true });
+            const res = await API.post(`/api/auth/reset-password/${id}/${token}`, { password: newPassword }, { withCredentials: true });
             toast.success("Password updated successfully!");
             return res.data;
         } catch (error) {
